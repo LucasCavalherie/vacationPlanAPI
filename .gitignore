@@ -17,3 +17,6 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+docker/db-data/
+docker/logs
+.DS_Store
