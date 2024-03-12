@@ -7,7 +7,7 @@ use App\DTOs\HolidayPlanDTO;
 use App\Models\HolidayPlan;
 use App\Repositories\HolidayPlanRepository;
 use Illuminate\Support\Facades\Validator;
-use InvalidArgumentException;
+use Illuminate\Validation\ValidationException;
 use PDF;
 
 class HolidayPlanService
@@ -35,13 +35,13 @@ class HolidayPlanService
     /**
      * @param HolidayPlanDTO $dto
      * @return void
+     * @throws ValidationException
      */
     protected function validate(HolidayPlanDTO $dto): void
     {
         $validator = Validator::make((array)$dto, HolidayPlan::$rules);
-
         if ($validator->fails()) {
-            throw new InvalidArgumentException($validator->errors()->first());
+            throw ValidationException::withMessages($validator->errors()->toArray());
         }
     }
 
@@ -72,6 +72,7 @@ class HolidayPlanService
     /**
      * @param HolidayPlanDTO $dto
      * @return mixed
+     * @throws ValidationException
      */
     public function create(HolidayPlanDTO $dto): mixed
     {
@@ -84,6 +85,7 @@ class HolidayPlanService
      * @param $id
      * @param HolidayPlanDTO $dto
      * @return mixed
+     * @throws ValidationException
      */
     public function update($id, HolidayPlanDTO $dto): mixed
     {

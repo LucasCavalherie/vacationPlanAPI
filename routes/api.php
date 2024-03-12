@@ -26,3 +26,8 @@ Route::get('/holiday-plans/{id}', [HolidayPlanController::class, 'getById'])->mi
 Route::patch('/holiday-plans/{id}', [HolidayPlanController::class, 'update'])->middleware('auth:sanctum');
 Route::delete('/holiday-plans/{id}', [HolidayPlanController::class, 'delete'])->middleware('auth:sanctum');
 Route::get('/holiday-plans/{id}/generate-pdf', [HolidayPlanController::class, 'generatePDF'])->middleware('auth:sanctum');
+
+Route::fallback(function(){
+    return response()->json([
+        'message' => 'Page Not Found'], 404);
+});
