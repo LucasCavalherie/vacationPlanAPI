@@ -6,6 +6,7 @@ namespace App\Http\Controllers;
 use App\DTOs\HolidayPlanDTO;
 use App\Services\HolidayPlanService;
 use Illuminate\Http\Request;
+use PDF;
 
 class HolidayPlanController extends Controller
 {
@@ -38,7 +39,7 @@ class HolidayPlanController extends Controller
     /**
      * @return mixed
      */
-    public function index()
+    public function getAll()
     {
         return $this->service->getAll();
     }
@@ -47,7 +48,7 @@ class HolidayPlanController extends Controller
      * @param $id
      * @return mixed
      */
-    public function show($id)
+    public function getById($id)
     {
         return $this->service->getById($id);
     }
@@ -73,8 +74,17 @@ class HolidayPlanController extends Controller
      * @param $id
      * @return mixed
      */
-    public function destroy($id)
+    public function delete($id): mixed
     {
         return $this->service->delete($id);
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function generatePDF($id)
+    {
+        return $this->service->generatePDF($id);
     }
 }

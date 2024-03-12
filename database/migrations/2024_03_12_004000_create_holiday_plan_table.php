@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('date');
             $table->string('location');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

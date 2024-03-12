@@ -7,6 +7,8 @@ use App\DTOs\HolidayPlanDTO;
 use App\Models\HolidayPlan;
 use App\Repositories\HolidayPlanRepository;
 use Illuminate\Support\Facades\Validator;
+use InvalidArgumentException;
+use PDF;
 
 class HolidayPlanService
 {
@@ -21,6 +23,50 @@ class HolidayPlanService
     public function __construct(HolidayPlanRepository $repository)
     {
         $this->repository = $repository;
+    }
+
+
+    /*
+     |--------------------------------------------------------------------------
+     | Protected methods
+     |--------------------------------------------------------------------------
+     */
+
+    /**
+     * @param HolidayPlanDTO $dto
+     * @return void
+     */
+    protected function validate(HolidayPlanDTO $dto): void
+    {
+        $validator = Validator::make((array)$dto, HolidayPlan::$rules);
+
+        if ($validator->fails()) {
+            throw new InvalidArgumentException($validator->errors()->first());
+        }
+    }
+
+
+    /*
+     |--------------------------------------------------------------------------
+     | Public methods
+     |--------------------------------------------------------------------------
+     */
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getById($id): mixed
+    {
+        return $this->repository->getById($id);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getAll(): mixed
+    {
+        return $this->repository->getAll();
     }
 
     /**
@@ -47,15 +93,28 @@ class HolidayPlanService
     }
 
     /**
-     * @param HolidayPlanDTO $dto
-     * @return void
+     * @param $id
+     * @return mixed
      */
-    protected function validate(HolidayPlanDTO $dto): void
+    public function delete($id): mixed
     {
-        $validator = Validator::make((array)$dto, HolidayPlan::$rules);
+        return $this->repository->delete($id);
+    }
 
-        if ($validator->fails()) {
-            throw new \InvalidArgumentException($validator->errors()->first());
-        }
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function generatePDF($id): mixed
+    {
+        $holidayPlan = $this->getById($id);
+        $data = [
+            'title' => $holidayPlan->title,
+            'description' => $holidayPlan->description,
+            'date' => $holidayPlan->date,
+            'location' => $holidayPlan->location,
+        ];
+        $pdf = PDF::loadView('pdf.document', $data);
+        return $pdf->download('document.pdf');
     }
 }
