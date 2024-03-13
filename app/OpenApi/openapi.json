@@ -1,0 +1,183 @@
+{
+    "openapi": "3.0.2",
+    "info": {
+        "title": "Laravel",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http:\/\/localhost:8000"
+        }
+    ],
+    "paths": {
+        "\/api\/holiday-plans": {
+            "post": {
+                "tags": [
+                    "holiday plan"
+                ],
+                "requestBody": {
+                    "description": "Criar novo Cliente",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/HolidayPlanResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Requisição com sucesso",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/HolidayPlanResponseSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "get": {
+                "tags": [
+                    "holiday plan"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição com sucesso",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/HolidayPlanResponseSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/holiday-plans\/{id}": {
+            "get": {
+                "tags": [
+                    "holiday plan"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição com sucesso",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/HolidayPlanResponseSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "patch": {
+                "tags": [
+                    "holiday plan"
+                ],
+                "requestBody": {
+                    "description": "Criar novo Cliente",
+                    "content": {
+                        "application\/json": {
+                            "schema": {
+                                "$ref": "#\/components\/schemas\/HolidayPlanResponseSchema"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Requisição com sucesso",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/HolidayPlanResponseSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "holiday plan"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição com sucesso",
+                        "content": {
+                            "application\/json": {
+                                "schema": {
+                                    "$ref": "#\/components\/schemas\/HolidayPlanResponseSchema"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "\/api\/holiday-plans\/{id}\/generate-pdf": {
+            "get": {
+                "tags": [
+                    "holiday plan"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Requisição com sucesso",
+                        "content": {
+                            "application\/pdf": []
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "HolidayPlanResponseSchema": {
+                "type": "object",
+                "properties": {
+                    "title": {
+                        "description": "Holiday Title",
+                        "type": "string",
+                        "example": "New Year"
+                    },
+                    "description": {
+                        "description": "Holiday Description",
+                        "type": "string",
+                        "example": "A beautiful day for alcoholics"
+                    },
+                    "date": {
+                        "description": "Holiday date",
+                        "type": "string",
+                        "example": "2024-01-01T00:00:00.000000Z"
+                    },
+                    "location": {
+                        "description": "Location of Holiday",
+                        "type": "string",
+                        "example": "Sidney"
+                    },
+                    "created_at": {
+                        "description": "Data de criação",
+                        "type": "string",
+                        "example": "2024-03-13T01:42:50.000000Z"
+                    },
+                    "updated_at": {
+                        "description": "Data da última atualização",
+                        "type": "string",
+                        "example": "2024-03-13T01:42:50.000000Z"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "holiday plan",
+            "description": "Endpoints for Holiday Plans"
+        }
+    ]
+}

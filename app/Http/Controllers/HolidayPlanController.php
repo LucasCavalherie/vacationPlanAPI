@@ -4,10 +4,16 @@
 namespace App\Http\Controllers;
 
 use App\DTOs\HolidayPlanDTO;
+use App\OpenApi\RequestBodies\CreateHolidayPlanRequestBody;
+use App\OpenApi\Responses\HolidayPlanPdfResponse;
+use App\OpenApi\Responses\HolidayPlanResponse;
 use App\Services\HolidayPlanService;
 use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 use PDF;
+use Vyuldashev\LaravelOpenApi\Attributes as OpenApi;
 
+#[OpenApi\PathItem]
 class HolidayPlanController extends Controller
 {
     /**
@@ -23,7 +29,11 @@ class HolidayPlanController extends Controller
     /**
      * @param Request $request
      * @return mixed
+     * @throws ValidationException
      */
+    #[OpenApi\Operation(tags: ['holiday plan'])]
+    #[OpenApi\RequestBody(factory: CreateHolidayPlanRequestBody::class)]
+    #[OpenApi\Response(factory: HolidayPlanResponse::class)]
     public function create(Request $request)
     {
         $dto = new HolidayPlanDTO(
@@ -39,6 +49,8 @@ class HolidayPlanController extends Controller
     /**
      * @return mixed
      */
+    #[OpenApi\Operation(tags: ['holiday plan'])]
+    #[OpenApi\Response(factory: HolidayPlanResponse::class)]
     public function getAll()
     {
         return $this->service->getAll();
@@ -48,6 +60,8 @@ class HolidayPlanController extends Controller
      * @param $id
      * @return mixed
      */
+    #[OpenApi\Operation(tags: ['holiday plan'])]
+    #[OpenApi\Response(factory: HolidayPlanResponse::class)]
     public function getById($id)
     {
         return $this->service->getById($id);
@@ -57,7 +71,11 @@ class HolidayPlanController extends Controller
      * @param Request $request
      * @param $id
      * @return mixed
+     * @throws ValidationException
      */
+    #[OpenApi\Operation(tags: ['holiday plan'])]
+    #[OpenApi\RequestBody(factory: CreateHolidayPlanRequestBody::class)]
+    #[OpenApi\Response(factory: HolidayPlanResponse::class)]
     public function update(Request $request, $id)
     {
         $dto = new HolidayPlanDTO(
@@ -74,6 +92,8 @@ class HolidayPlanController extends Controller
      * @param $id
      * @return mixed
      */
+    #[OpenApi\Operation(tags: ['holiday plan'])]
+    #[OpenApi\Response(factory: HolidayPlanResponse::class)]
     public function delete($id): mixed
     {
         return $this->service->delete($id);
@@ -83,6 +103,8 @@ class HolidayPlanController extends Controller
      * @param $id
      * @return mixed
      */
+    #[OpenApi\Operation(tags: ['holiday plan'])]
+    #[OpenApi\Response(factory: HolidayPlanPdfResponse::class)]
     public function generatePDF($id)
     {
         return $this->service->generatePDF($id);
