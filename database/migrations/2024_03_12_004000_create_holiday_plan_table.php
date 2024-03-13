@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('holiday_plan', function (Blueprint $table) {
             $table->id();
             $table->string('title');
-            $table->string('description');
+            $table->text('description');
             $table->timestamp('date');
             $table->string('location');
             $table->timestamps();

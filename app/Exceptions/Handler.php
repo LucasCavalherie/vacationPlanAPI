@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Http\JsonResponse;
@@ -42,6 +43,12 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $e): Response|JsonResponse|RedirectResponse
     {
+        if ($e instanceof AuthenticationException) {
+            return response()->json([
+                'error' => 'Unauthorized'
+            ], ResponseStatus::HTTP_UNAUTHORIZED);
+        }
+
         if ($e instanceof ModelNotFoundException) {
             return response()->json([
                 'error' => 'Entry for '.str_replace('App\Models\\', '', $e->getModel()).' not found'
@@ -50,7 +57,6 @@ class Handler extends ExceptionHandler
 
         if ($e instanceof ValidationException) {
             return response()->json([
-                'message' => 'Validation failed',
                 'errors' => $e->errors()
             ], ResponseStatus::HTTP_UNPROCESSABLE_ENTITY);
         }
