@@ -18,11 +18,11 @@ class HolidayPlanService
     protected $repository;
 
     /**
-     * @param HolidayPlanRepository $repository
+     * @param HolidayPlanRepository|null $repository
      */
-    public function __construct(HolidayPlanRepository $repository)
+    public function __construct(?HolidayPlanRepository $repository = null)
     {
-        $this->repository = $repository;
+        $this->repository = $repository ?? new HolidayPlanRepository();
     }
 
 

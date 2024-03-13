@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Response;
 use Illuminate\Validation\ValidationException;
+use Symfony\Component\HttpFoundation\Response as ResponseStatus;
 use Throwable;
 
 class Handler extends ExceptionHandler
@@ -44,14 +45,14 @@ class Handler extends ExceptionHandler
         if ($e instanceof ModelNotFoundException) {
             return response()->json([
                 'error' => 'Entry for '.str_replace('App\Models\\', '', $e->getModel()).' not found'
-            ], 404);
+            ], ResponseStatus::HTTP_NOT_FOUND);
         }
 
         if ($e instanceof ValidationException) {
             return response()->json([
                 'message' => 'Validation failed',
                 'errors' => $e->errors()
-            ], 422);
+            ], ResponseStatus::HTTP_UNPROCESSABLE_ENTITY);
         }
 
         return parent::render($request, $e);
